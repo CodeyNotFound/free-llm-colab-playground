@@ -99,21 +99,23 @@ if not hardware.cuda_available:
     ),
     markdown(
         """
-## 3 · Build llama.cpp with CUDA
+## 3 · Prepare llama.cpp with CUDA
 
-This compiles the official `llama-server` in the current runtime. On a CUDA runtime the installer
-enables GPU offload; otherwise it builds CPU support. Compilation takes several minutes the first time.
+The fast path downloads a checksum-verified T4 runtime built by this project's GitHub Actions. If it
+is unavailable or incompatible, the notebook safely falls back to compiling official `llama.cpp`.
+The live status shows the current stage, elapsed time, build percentage, and approximate ETA.
 """
     ),
     code(
         """
 import os
-import subprocess
 from pathlib import Path
 
+from app.backend.build_progress import run_with_progress
+
 env = {**os.environ, "BUILD_JOBS": "2"}
-subprocess.run(["bash", "scripts/install_llama_cpp.sh"], check=True, env=env)
-server_path = Path("llama.cpp/build/bin/llama-server").resolve()
+run_with_progress(["bash", "scripts/install_llama_cpp.sh"], env=env)
+server_path = Path(Path(".runtime/llama_server_path.txt").read_text().strip()).resolve()
 os.environ["LLAMA_SERVER_PATH"] = str(server_path)
 print(f"Using {server_path}")
 """

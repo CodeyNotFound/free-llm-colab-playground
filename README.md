@@ -117,8 +117,12 @@ ruff check .
 free-llm-playground --host 127.0.0.1
 ```
 
-Install/build `llama-server` separately or run `scripts/install_llama_cpp.sh` on Linux with CMake.
-Set `LLAMA_SERVER_PATH` when it is not on `PATH`.
+The Colab notebook first tries a checksum-verified, precompiled T4 `llama-server`, so startup normally
+takes minutes rather than spending 15–30 minutes of GPU time compiling. It falls back to an official
+source build when the runtime is unavailable or incompatible, with live stage, elapsed-time, progress,
+and ETA reporting. Set `PLAYGROUND_SKIP_PREBUILT=1` to force that source build. Locally, install/build
+`llama-server` separately or run `scripts/install_llama_cpp.sh` on Linux with CMake. Set
+`LLAMA_SERVER_PATH` when it is not on `PATH`.
 
 ## Limitations
 

@@ -1,0 +1,41 @@
+name: Build Colab T4 runtime
+
+on:
+  workflow_dispatch:
+    inputs:
+      llama_ref:
+        description: llama.cpp branch, tag, or commit
+        required: true
+        default: master
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build an optimized sm_75 llama-server
+        env:
+          LLAMA_REF: ${{ inputs.llama_ref }}
+        run: |
+          docker run --rm \
+            -e LLAMA_REF="$LLAMA_REF" \
+            -v "$PWD:/workspace" \
+            -w /workspace \
+            nvidia/cuda:12.4.1-devel-ubuntu22.04 \
+            bash scripts/build_colab_runtime.sh
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: llama-server-colab-t4-cuda12
+          path: dist/llama-server-colab-t4-cuda12.tar.gz*
+      - name: Publish fast-start runtime
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view runtime-t4-v1 >/dev/null 2>&1 || \
+            gh release create runtime-t4-v1 --title "Colab T4 runtime" \
+              --notes "Precompiled llama-server for the notebook fast-start path."
+          gh release upload runtime-t4-v1 dist/llama-server-colab-t4-cuda12.tar.gz* --clobber
