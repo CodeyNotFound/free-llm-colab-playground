@@ -133,28 +133,29 @@ The application provides the remaining flow in one place:
 5. Start the model, stream chat, attach documents, and inspect telemetry/logs.
 6. Optionally create an authenticated Cloudflare Quick Tunnel for OpenAI-compatible clients.
 
-Click the public Gradio link printed by the cell. The API tunnel is **not** created automatically.
+Click the public Gradio link printed by the cell, or use the embedded app. Log in with username
+**colab** and the **UI password** printed below the cell. This password changes when you relaunch.
+The API tunnel is **not** created automatically.
 """
     ),
     code(
         """
-import gradio as gr
-
 import secrets
 
-from app.frontend.ui import CSS, create_app
+from app.frontend.ui import CSS, THEME, create_app
 
 demo = create_app()
 ui_password = secrets.token_urlsafe(12)
-print(f"Private UI login: colab / {ui_password}")
+print("UI username: colab")
+print(f"UI password: {ui_password}")
 demo.queue(default_concurrency_limit=2).launch(
     share=True,
     auth=("colab", ui_password),
-    auth_message="Private Colab session. Use the credentials printed in this notebook output.",
+    auth_message="Username: colab. Copy the UI password printed below cell 4 in your Colab notebook.",
     debug=False,
     show_error=False,
     prevent_thread_lock=True,
-    theme=gr.themes.Soft(),
+    theme=THEME,
     css=CSS,
     max_file_size="8mb",
     enable_monitoring=False,
@@ -165,11 +166,15 @@ demo.queue(default_concurrency_limit=2).launch(
         """
 ## 5 · Use the model
 
-In the browser UI, follow **Model → Start & Nerd Mode → Chat**. Simple defaults reserve headroom
-instead of filling every MiB of VRAM. Advanced users can override GPU layers, batch/microbatch,
-threads, KV type, flash attention, and context size.
+In the browser UI, open **Setup** and read the **60-second guide**. Follow the three steps:
+**Choose a model → Check memory & download → Start your model**. Wait for **Ready to chat**, then open
+**Chat**. The default 4096-token context leaves more memory headroom. Advanced loading settings are
+collapsed under step 3; you do not need to change them for a first run.
 
-To connect SillyTavern, OpenCode, Python, curl, or another OpenAI-compatible client, open **API**,
+Attach documents from **Chat → Ask about a document**. Check performance or server logs in **Monitor**.
+The **Help** tab explains model terminology and common problems.
+
+To connect SillyTavern, OpenCode, Python, curl, or another OpenAI-compatible client, open **Connect apps**,
 read the warning, create the temporary tunnel, and copy the Base URL, key, and model ID. Use
 `GET /v1/models` and `POST /v1/chat/completions`; streaming uses SSE through llama-server.
 """
@@ -178,7 +183,7 @@ read the warning, create the temporary tunnel, and copy the Base URL, key, and m
         """
 ## 6 · Stop and disconnect
 
-Use **Stop tunnel** when external access is no longer needed, then **Stop model**. Colab may also
+Use **Stop tunnel** when external access is no longer needed, then **Monitor → Stop model & API tunnel**. Colab may also
 terminate the runtime at any time. A runtime reset removes downloaded models, generated credentials,
 local logs, and URLs. The generated API key is never committed or printed to server logs.
 

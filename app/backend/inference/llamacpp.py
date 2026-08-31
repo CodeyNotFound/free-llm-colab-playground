@@ -138,9 +138,9 @@ class LlamaCppBackend(InferenceBackend):
         if "out of memory" in lowered or "cuda error" in lowered:
             return (
                 "The model ran out of GPU memory while loading. Reduce context, lower GPU layers, "
-                "or choose a smaller quantization. Technical logs are available in Nerd Mode."
+                "or choose a smaller quantization. Technical logs are available in Monitor → Server logs."
             )
-        return "llama-server exited before the model became ready. Open Logs in Nerd Mode for details."
+        return "llama-server exited before the model became ready. Open Monitor → Server logs for details."
 
     def stop(self) -> None:
         if self.process and self.process.poll() is None:

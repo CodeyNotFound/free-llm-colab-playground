@@ -30,7 +30,7 @@ budget allows. Remaining layers stay in system RAM for hybrid inference.
 - Dynamic GPU, VRAM, RAM, CPU, CUDA, Python, and OS detection
 - Hugging Face API model search, metadata, GGUF discovery, split-file support, and caching
 - Approximate, explainable VRAM/RAM/KV-cache planning with automatic GPU-layer selection
-- Beginner defaults plus Nerd Mode controls for context, layers, batches, threads, KV type, and flash attention
+- Guided three-step setup, a 60-second tutorial, contextual help, and optional advanced loading controls
 - CUDA-enabled `llama-server` build and supervised subprocess lifecycle
 - Streaming multi-turn chat, system prompt, sampling controls, stop sequences, clear, and regenerate
 - TXT/Markdown/JSON/CSV/source/PDF attachments with size limits and prompt-injection boundaries
@@ -45,10 +45,10 @@ budget allows. Remaining layers stay in system RAM for hybrid inference.
 
 1. Open the notebook with the badge and enable a GPU runtime.
 2. Set the repository URL in the setup cell and run the notebook top to bottom.
-3. Open the Gradio link, search for a model, and inspect its GGUF options.
-4. Start with the recommended Q4 quantization and 4K–8K context.
-5. Download, start the model, and chat.
-6. If an external client is needed, open **API**, create a temporary tunnel, and copy the URL, key,
+3. Open the Gradio link, log in, and read the 60-second guide in **Setup**.
+4. Find a model, inspect its files, and review the memory check. Start with Q4_K_M and 4096 context.
+5. Download the file, click **Start model**, then open **Chat** when the status says ready.
+6. If an external client is needed, open **Connect apps**, create a temporary tunnel, and copy the URL, key,
    and model ID.
 
 See [Getting started](docs/getting-started.md) for the full walkthrough.
@@ -57,11 +57,11 @@ See [Getting started](docs/getting-started.md) for the full walkthrough.
 
 ```text
 ┌───────────────────────────────────────────────────────────┐
-│ 🧠 Free LLM Colab Playground       🟢 model · Hybrid · 8K │
+│ Free LLM Colab Playground          Ready to chat · 4K     │
 ├───────────────────────────────────────────────────────────┤
-│ Model │ Chat │ Files │ Start & Nerd │ API │ Connect       │
+│ Setup │ Chat │ Monitor │ Connect apps │ Help             │
 ├───────────────────────────────────────────────────────────┤
-│ Search Hugging Face → choose actual GGUF → estimate fit   │
+│ 01 Choose a model → 02 Check & download → 03 Start        │
 │                                                           │
 │ User   Explain this uploaded code                          │
 │ Model  …streaming response…                               │

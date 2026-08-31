@@ -17,7 +17,7 @@ active parameters do not reduce total weight storage.
 
 ## Server exits while loading
 
-The beginner message gives likely remediation. Open Nerd Mode → Logs for llama.cpp output. Verify the
+The beginner message gives likely remediation. Open Monitor → Server logs for llama.cpp output. Verify the
 selected file exists, all split files downloaded, and `LLAMA_SERVER_PATH` points to the build.
 
 ## Model answers strangely
@@ -34,4 +34,3 @@ is not production hosting. External streaming is unsupported by Quick Tunnel.
 
 Accept the model terms on Hugging Face and authenticate the runtime with a scoped read token. Never
 paste that token into this repository or commit notebook outputs.
-

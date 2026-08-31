@@ -18,4 +18,5 @@ llama.cpp/
 dist/
 build/
 .ipynb_checkpoints/
-
+output/playwright/
+.playwright-cli/

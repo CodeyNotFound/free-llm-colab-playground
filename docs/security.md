@@ -18,7 +18,7 @@ production access policy or SLA.
 - Uploaded filenames are normalized, files are never executed, unsupported extensions are rejected
 - Upload size is limited to 8 MiB and extracted content to 80,000 characters
 - Document text is wrapped as untrusted reference material, not system instructions
-- Raw exceptions/logs remain in Nerd Mode while normal failures get actionable messages
+- Raw server logs are available in Monitor while normal failures get actionable messages
 
 ## User responsibilities
 

@@ -4,9 +4,7 @@ import argparse
 import os
 import secrets
 
-import gradio as gr
-
-from app.frontend.ui import CSS, create_app
+from app.frontend.ui import CSS, THEME, create_app
 
 
 def main() -> None:
@@ -20,15 +18,16 @@ def main() -> None:
     if should_share:
         ui_password = os.getenv("PLAYGROUND_UI_PASSWORD") or secrets.token_urlsafe(12)
         auth = ("colab", ui_password)
-        print(f"Shared UI login: colab / {ui_password}")
+        print("UI username: colab")
+        print(f"UI password: {ui_password}")
     create_app().queue(default_concurrency_limit=2).launch(
         server_name=args.host,
         server_port=args.port,
         share=should_share,
         auth=auth,
-        auth_message="Private Colab session. Use the credentials printed in your notebook output.",
+        auth_message="Username: colab. Copy the UI password printed in your launch output.",
         show_error=False,
-        theme=gr.themes.Soft(),
+        theme=THEME,
         css=CSS,
         max_file_size="8mb",
         enable_monitoring=False,
